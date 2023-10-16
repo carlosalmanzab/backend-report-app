@@ -1,4 +1,4 @@
-package com.reportapp.demo.model;
+package com.reportapp.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,6 +30,6 @@ public class TipoReporte {
     private String fecha;
 
     @Column(name = "estado")
-    private boolean estado;
+    private boolean estado = true;
 
 }
