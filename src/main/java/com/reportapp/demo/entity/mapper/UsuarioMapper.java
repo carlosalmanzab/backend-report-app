@@ -51,26 +51,5 @@ public interface UsuarioMapper {
         usuarioDTO.setReportes(toReporteDTOList(usuario.getReportes())); // Llama al método que mapea la lista de Reportes
         return usuarioDTO;
     }
-    /*List<ReporteDTO> toReporteDTOList(List<Reporte> reportes); // Mapeo de la lista de Reportes
-
-    List<Reporte> toReporteList(List<ReporteDTO> reporteDTOs);
-
-    @AfterMapping
-    default void mapReportes(Usuario usuario, @MappingTarget UsuarioDTO usuarioDTO) {
-        if (usuario != null && usuario.getReportes() != null) {
-            usuarioDTO.setReportes(toReporteDTOList(usuario.getReportes()));
-        } else {
-            usuarioDTO.setReportes(null); // Asegúrate de establecer la lista en nulo si no hay reportes
-        }
-    }
-
-    default UsuarioDTO toDTOWithReportes(Usuario usuario) {
-        if (usuario == null) {
-            return null;
-        }
-        UsuarioDTO usuarioDTO = toDTO(usuario);
-        mapReportes(usuario, usuarioDTO); // Llama al método que mapea la lista de Reportes
-        return usuarioDTO;
-    }*/
 
 }

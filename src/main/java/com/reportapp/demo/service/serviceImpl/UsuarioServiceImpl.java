@@ -19,8 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -48,9 +50,14 @@ public class UsuarioServiceImpl implements UsuarioService {
                     .build();
             return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
         }
-        UsuarioDTO usuarioDTO = usuarioMapper.toDTOWithReportes(usuario.get());
+
+        UsuarioDTO usuarioDTO = usuarioMapper.toDTO(usuario.get());
+        List<ReporteDTO> reporteDTOList = usuarioDTO.getReportes().stream().toList();
+
+        usuarioDTO.setReportes(reporteDTOList);
         return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
     }
+
 
     @Override
     public ResponseEntity<?> registrar(UsuarioDTOSave usuarioDTOSave) {
@@ -113,32 +120,19 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public ResponseEntity<?> reportesPorId(Long id) {
         ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
-        Optional<List<Reporte>> reportes = usuarioRepository.findAllById(id);
-        if (reportes.isEmpty()) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        List<Reporte> reportes = usuario.get().getReportes();
+        if (usuario.isEmpty() || reportes.isEmpty()) {
             responseMessage
                     .code(HttpStatus.NOT_FOUND.value())
                     .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND_REPORTES)
                     .build();
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMessage);
         }
-        List<ReporteDTO> reporteDTO = reporteMapper.toReporteDTOList(reportes.get());
+        List<ReporteDTO> reporteDTO = reportes.stream().map(reporteMapper::toDTO).toList();
         return ResponseEntity.status(HttpStatus.OK).body(reporteDTO);
     }
 
-    @Override
-    public ResponseEntity<?> reportesPorIdentificacion(String identificacion) {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
-        Optional<List<Reporte>> reportes = usuarioRepository.findAllByIdentificacion(identificacion);
-        if (reportes.isEmpty()) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND_REPORTES)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMessage);
-        }
-        List<ReporteDTO> reporteDTO = reporteMapper.toReporteDTOList(reportes.get());
-        return ResponseEntity.status(HttpStatus.OK).body(reporteDTO);
-    }
 /*
     @Override
     public boolean verificarExistencia(Usuario usuario) throws UsuarioNotFoundException {

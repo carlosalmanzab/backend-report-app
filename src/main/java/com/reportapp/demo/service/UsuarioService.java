@@ -10,7 +10,6 @@ public interface UsuarioService {
     ResponseEntity<?> registrar(UsuarioDTOSave usuarioDTOSave);
     ResponseEntity<?> login(UsuarioDTOLogin usuarioDTOLogin);
     ResponseEntity<?> reportesPorId(Long id);
-    ResponseEntity<?> reportesPorIdentificacion(String identificacion);
 /*
     ResponseMessage verificarExistencia(Usuario usuario) throws UsuarioNotFoundException;
 

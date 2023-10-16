@@ -26,14 +26,9 @@ public class UsuarioController {
         return usuarioService.registrar(usuarioDTOSave);
     }
 
-    @GetMapping("/{id}/reportes")
+    @GetMapping(value = "/{id}/reportes")
     public ResponseEntity<?> reportesPorId(@PathVariable Long id) {
         return usuarioService.reportesPorId(id);
-    }
-
-    @GetMapping("/{identificacion}/reportes")
-    public ResponseEntity<?> reportesPorIdentificacion(@PathVariable String identificacion) {
-        return usuarioService.reportesPorIdentificacion(identificacion);
     }
 
 }

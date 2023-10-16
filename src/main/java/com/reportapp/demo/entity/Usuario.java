@@ -1,5 +1,8 @@
 package com.reportapp.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -62,6 +65,7 @@ public class Usuario {
     @JoinColumn(name = "barrio_id")
     private Barrio barrio;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @ManyToMany
     @JoinTable(name = "usuario_reporte",
             joinColumns = @JoinColumn(name = "usuario_id"),

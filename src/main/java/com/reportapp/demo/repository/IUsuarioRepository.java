@@ -12,8 +12,6 @@ import java.util.Optional;
 
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    Optional<List<Reporte>> findAllById(Long id);
-    Optional<List<Reporte>> findAllByIdentificacion(String identificacion);
     Usuario save(Usuario usuario);
     Optional<Usuario> findByEmailAndPassword(String email, String password);
     Optional<Boolean> existsByEmail(String email);
