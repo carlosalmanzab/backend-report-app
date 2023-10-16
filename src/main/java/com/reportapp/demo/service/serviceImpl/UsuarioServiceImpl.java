@@ -13,7 +13,6 @@ import com.reportapp.demo.entity.Usuario;
 import com.reportapp.demo.repository.IUsuarioRepository;
 import com.reportapp.demo.service.UsuarioService;
 import com.reportapp.demo.util.PasswordEncoder;
-import jakarta.persistence.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
