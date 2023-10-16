@@ -1,11 +1,10 @@
-package com.reportapp.demo.model;
+package com.reportapp.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,7 +20,6 @@ public class Reporte {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //manyToOne
     @ManyToMany
     @JoinTable(name = "usuario_reporte",
             joinColumns = @JoinColumn(name = "reporte_id"),
@@ -32,27 +30,22 @@ public class Reporte {
     @JoinColumn(name = "barrio_id")
     private Barrio barrio;
 
-    //oneToMany
     @ManyToOne
     @JoinColumn(name = "tipo_reporte_id")
     private TipoReporte tipoReporte;
 
-    //OnetoOne
     @OneToOne
     @JoinColumn(name = "imagen_id")
     private Imagen imagen;
+
+    @OneToOne
+    @JoinColumn(name = "coordenada_id")
+    private Coordenadas coordenadas;
 
     @Column(name = "fecha")
     private LocalDate fechaRegistro;
 
     @Column(name = "descripcion")
     private String descripcion;
-
-    @Column(name = "latitud", precision = 10, scale = 6)
-    private BigDecimal latitud;
-
-    @Column(name = "longitud", precision = 10, scale = 6)
-    private BigDecimal longitud;
-
 
 }

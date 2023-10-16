@@ -12,9 +12,10 @@
     <artifactId>backend-report-app</artifactId>
     <version>0.0.1</version>
     <name>backend-report-app</name>
-    <description>Backen rest api for report app</description>
+    <description>Backend rest api for report app</description>
     <properties>
         <java.version>17</java.version>
+        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
     </properties>
     <dependencies>
         <dependency>
@@ -63,7 +64,16 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- Herramientas dep end-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.5.Final</version>
+        </dependency><!-- Herramientas dep end-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -77,7 +87,6 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.11</version>
         </dependency>
     </dependencies>
 
@@ -92,6 +101,16 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+                        <source>1.8</source> <!-- depending on your project -->
+                        <target>1.8</target> <!-- depending on your project -->
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>1.5.5.Final</version>
+                            </path>
+                            <!-- other annotation processors -->
+                        </annotationProcessorPaths>
                     </excludes>
                 </configuration>
             </plugin>
