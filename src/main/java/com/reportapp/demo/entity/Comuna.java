@@ -23,6 +23,4 @@ public class Comuna {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(mappedBy = "comuna")
-    private List<Barrio> barrios;
 }

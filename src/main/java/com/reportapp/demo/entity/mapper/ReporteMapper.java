@@ -2,17 +2,19 @@ package com.reportapp.demo.entity.mapper;
 
 import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.Reporte;
+import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
 import org.mapstruct.Mapper;
-
-import java.util.List;
+import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
 @Mapper(componentModel = "spring")
+@Component
 public interface ReporteMapper {
 
+    ReporteMapper INSTANCE = Mappers.getMapper(ReporteMapper.class);
     ReporteDTO toDTO(Reporte reporte);
     Reporte toEntity(ReporteDTO reporteDTO);
 
-    List<ReporteDTO> toReporteDTOList(List<Reporte> reportes); // Mapeo de la lista de Reportes
+    Reporte toEntity(ReporteDTOSave reporteDTOSave);
 
-    List<Reporte> toReporteList(List<ReporteDTO> reporteDTOs);
 }

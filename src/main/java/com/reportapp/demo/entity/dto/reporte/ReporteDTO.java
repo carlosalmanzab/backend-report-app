@@ -1,5 +1,9 @@
 package com.reportapp.demo.entity.dto.reporte;
 
+import com.reportapp.demo.entity.Barrio;
+import com.reportapp.demo.entity.Coordenadas;
+import com.reportapp.demo.entity.Imagen;
+import com.reportapp.demo.entity.TipoReporte;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,15 +19,15 @@ public class ReporteDTO {
 
     private Long id;
 
-    private Long barrioId;
+    private Barrio barrio;
 
-    private Long tipoReporteId;
+    private TipoReporte tipoReporte;
 
-    private Long imagenId;
+    private Imagen imagen;
 
-    private Long coordenadaId;
+    private Coordenadas coordenadas;
 
     private LocalDate fechaRegistro;
 
-    private String descripción;
+    private String descripcion;
 }
