@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,12 +66,7 @@ public class Usuario {
     @JoinColumn(name = "barrio_id")
     private Barrio barrio;
 
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-    @ManyToMany
-    @JoinTable(name = "usuario_reporte",
-            joinColumns = @JoinColumn(name = "usuario_id"),
-            inverseJoinColumns = @JoinColumn(name = "reporte_id"))
-    private List<Reporte> reportes;
-
+    @OneToMany(mappedBy = "usuario")
+    private Set<Reporte> reportes;
 
 }
