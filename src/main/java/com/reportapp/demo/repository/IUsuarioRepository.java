@@ -14,7 +14,7 @@ public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario save(Usuario usuario);
     Optional<Usuario> findByEmailAndPassword(String email, String password);
-    Optional<Boolean> existsByEmail(String email);
+    Boolean existsByEmail(String email);
     Optional<Boolean> existsByEmailAndPassword(String email, String password);
     Optional<Boolean> existsByIdentificacion(String email);
 

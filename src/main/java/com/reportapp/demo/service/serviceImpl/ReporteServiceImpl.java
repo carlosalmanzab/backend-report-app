@@ -4,7 +4,6 @@ import com.reportapp.demo.entity.Reporte;
 import com.reportapp.demo.entity.Usuario;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
-import com.reportapp.demo.entity.dto.usuario.UsuarioDTO;
 import com.reportapp.demo.entity.mapper.ReporteMapper;
 import com.reportapp.demo.repository.IReporteRepository;
 import com.reportapp.demo.repository.IUsuarioRepository;
@@ -12,7 +11,6 @@ import com.reportapp.demo.service.ReporteService;
 import com.reportapp.demo.share.constant.ReporteMessageConstants;
 import com.reportapp.demo.share.constant.UsuarioMessageConstants;
 import com.reportapp.demo.share.dto.ResponseMessage;
-import com.reportapp.demo.util.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,7 +64,7 @@ public class ReporteServiceImpl implements ReporteService {
     }
 
     @Override
-    public ResponseEntity<?> guardarReporte(ReporteDTOSave reporteDTOSave) {
+    public ResponseEntity<?> guardarReporte(ReporteDTOSave reporteDTOSave, Long idUsuario) {
         ResponseMessage.ResponseMessageBuilder responseMessage =  ResponseMessage.builder();
 
         if (reporteDTOSave == null) {
@@ -77,7 +75,19 @@ public class ReporteServiceImpl implements ReporteService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
         }
 
-        Reporte reporteSave = reporteRepository.save(reporteMapper.toEntity(reporteDTOSave));
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+
+        if (usuario.isEmpty()) {
+            responseMessage
+                    .code(HttpStatus.BAD_REQUEST.value())
+                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND)
+                    .build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
+        }
+        Reporte reporteCreate = reporteMapper.toEntity(reporteDTOSave);
+        reporteCreate.setUsuario(usuario.get());
+
+        Reporte reporteSave = reporteRepository.save(reporteCreate);
 
         if (reporteSave == null) {
             responseMessage

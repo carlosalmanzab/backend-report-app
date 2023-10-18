@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/reporte")
+@RequestMapping("/reportes")
 @Tag(name = "Reporte", description = "Endpoint para el manejo de reportes")
 public class ReporteController {
 
@@ -25,9 +25,9 @@ public class ReporteController {
         return reporteService.reportePorId(id);
     }
 
-    @PostMapping()
-    public ResponseEntity<?> guardar(@RequestBody ReporteDTOSave reporteDTOSave) {
-        return reporteService.guardarReporte(reporteDTOSave);
+    @PostMapping("/{idUsuario}")
+    public ResponseEntity<?> guardar(@RequestBody ReporteDTOSave reporteDTOSave, @PathVariable Long idUsuario) {
+        return reporteService.guardarReporte(reporteDTOSave, idUsuario);
     }
 
 }
