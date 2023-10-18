@@ -130,11 +130,26 @@ public class UsuarioServiceImpl implements UsuarioService {
         return ResponseEntity.status(HttpStatus.OK).body(reporteDTO);
     }
 
-/*
     @Override
-    public boolean verificarExistencia(Usuario usuario) throws UsuarioNotFoundException {
-        return usuarioRepository.existsByEmail(usuario.getEmail());
+    public ResponseEntity<?> verificarExistencia(UsuarioDTOSave usuarioDTOSave) {
+        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
+        Boolean exist = usuarioRepository.existsByEmail(usuarioDTOSave.getEmail());
+
+        if (!exist) {
+            responseMessage
+                    .code(HttpStatus.NOT_FOUND.value())
+                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND)
+                    .build();
+            return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
+        }
+
+        responseMessage
+                .code(HttpStatus.OK.value())
+                .message(UsuarioMessageConstants.USUARIO_FOUND)
+                .build();
+        return ResponseEntity.ok(responseMessage);
     }
+/*
 
     @Override
     public Usuario loguin(String email, String password) throws UsuarioNotFoundException {
