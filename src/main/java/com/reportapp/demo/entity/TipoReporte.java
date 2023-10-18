@@ -2,12 +2,16 @@ package com.reportapp.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 @Entity
 @Table(name = "tipoReporte")
 public class TipoReporte {
@@ -27,7 +31,7 @@ public class TipoReporte {
     private String nombreUsuario;
 
     @Column(name = "fecha")
-    private String fecha;
+    private LocalDate fecha;
 
     @Column(name = "estado")
     private boolean estado = true;
