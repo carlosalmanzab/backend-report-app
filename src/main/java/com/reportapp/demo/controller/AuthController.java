@@ -1,8 +1,10 @@
 package com.reportapp.demo.controller;
 
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOLogin;
+import com.reportapp.demo.entity.dto.usuario.UsuarioDTOSave;
 import com.reportapp.demo.service.UsuarioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,10 +25,9 @@ public class AuthController {
         return usuarioService.login(usuarioDTOLogin);
     }
 
-    /*
     @PostMapping("/register")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTOLogin usuarioDTOLogin) {
-        return usuarioService.loguin(usuarioDTOLogin);
-    }*/
+    public ResponseEntity<?> guardar(@Valid @RequestBody UsuarioDTOSave usuarioDTOSave) {
+        return usuarioService.registrar(usuarioDTOSave);
+    }
 
 }
