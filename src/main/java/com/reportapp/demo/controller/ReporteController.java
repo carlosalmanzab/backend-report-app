@@ -1,6 +1,5 @@
 package com.reportapp.demo.controller;
 
-import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
 import com.reportapp.demo.service.ReporteService;
 import io.swagger.v3.oas.annotations.tags.Tag;

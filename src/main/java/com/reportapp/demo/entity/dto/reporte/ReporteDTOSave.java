@@ -1,10 +1,6 @@
 package com.reportapp.demo.entity.dto.reporte;
 
 import com.reportapp.demo.entity.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

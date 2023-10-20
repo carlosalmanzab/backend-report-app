@@ -1,15 +1,12 @@
 package com.reportapp.demo.service.serviceImpl;
 
 import com.reportapp.demo.entity.Reporte;
-import com.reportapp.demo.entity.Usuario;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
 import com.reportapp.demo.entity.mapper.ReporteMapper;
 import com.reportapp.demo.repository.IReporteRepository;
-import com.reportapp.demo.repository.IUsuarioRepository;
 import com.reportapp.demo.service.ReporteService;
 import com.reportapp.demo.share.constant.ReporteMessageConstants;
-import com.reportapp.demo.share.constant.UsuarioMessageConstants;
 import com.reportapp.demo.share.dto.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,9 +21,6 @@ public class ReporteServiceImpl implements ReporteService {
 
     @Autowired
     private IReporteRepository reporteRepository;
-
-    @Autowired
-    private IUsuarioRepository usuarioRepository;
 
     @Autowired
     private ReporteMapper reporteMapper;
