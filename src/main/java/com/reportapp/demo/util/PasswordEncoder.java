@@ -4,6 +4,10 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class PasswordEncoder {
 
+    private PasswordEncoder() {
+        throw new IllegalStateException("Password utility class");
+    }
+
     public static String encode(String password) {
         // Saltea aleatoriamente las contraseñas para hacerlas más seguras
         String salt = generateRandomSalt();
@@ -17,7 +21,7 @@ public class PasswordEncoder {
     }
 
     private static String generateRandomSalt() {
-        // Genera una sal aleatoria, por ejemplo, tomando la hora actual
+        // Genera una sal aleatoria, tomando la hora actual
         String timestamp = String.valueOf(System.currentTimeMillis());
         return DigestUtils.sha256Hex(timestamp);
     }
