@@ -6,15 +6,13 @@ import com.reportapp.demo.entity.dto.tipoReporte.TipoReporteDTOSave;
 import com.reportapp.demo.entity.mapper.TipoReporteMapper;
 import com.reportapp.demo.repository.ITipoReporteRepository;
 import com.reportapp.demo.service.TipoReporteService;
-import com.reportapp.demo.share.constant.TipoReporteMessageConstants;
-import com.reportapp.demo.share.dto.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TipoReporteServiceImpl implements TipoReporteService {
@@ -25,49 +23,28 @@ public class TipoReporteServiceImpl implements TipoReporteService {
     private TipoReporteMapper tipoReporteMapper;
 
     @Override
-    public ResponseEntity<?> listarTiposDeIndentificaciones() {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
+    public ResponseEntity<List<TipoReporteDTO>> listarTiposDeIndentificaciones() {
 
         List<TipoReporte> tipoReportes = tipoReporteRepository.findAllByEstado(true);
-        if (tipoReportes.isEmpty()) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(TipoReporteMessageConstants.TIPO_REPORTE_ERROR_NO_FOUND_TIPO_REPORTES)
-                    .build();
-            return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
-        }
+        
+        if (tipoReportes.isEmpty()) return ResponseEntity.noContent().build();
 
         List<TipoReporteDTO> tipoReporteDTOS = tipoReportes.stream().map(tipoReporteMapper::toDTO).toList();
-        return new ResponseEntity<>(tipoReporteDTOS, HttpStatus.OK);
+        return ResponseEntity.ok(tipoReporteDTOS);
     }
 
     @Override
-    public ResponseEntity<?> guardar(TipoReporteDTOSave tipoReporteDTOSave) {
-        ResponseMessage.ResponseMessageBuilder responseMessage =  ResponseMessage.builder();
+    public ResponseEntity<TipoReporteDTO> guardar(TipoReporteDTOSave tipoReporteDTOSave) {
 
-        if (tipoReporteDTOSave == null) {
-            responseMessage
-                    .code(HttpStatus.BAD_REQUEST.value())
-                    .message(TipoReporteMessageConstants.TIPO_REPORTE_ERROR_NULL)
-                    .build();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
-        }
+        if (tipoReporteDTOSave == null) return ResponseEntity.badRequest().build();
 
         TipoReporte tipoReporteSave = tipoReporteRepository.save(tipoReporteMapper.toEntity(tipoReporteDTOSave));
 
-        if (tipoReporteSave == null) {
-            responseMessage
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message(TipoReporteMessageConstants.TIPO_REPORTE_ERROR_SAVE)
-                    .build();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMessage);
-        }
+        if (tipoReporteSave.getId() == null) return ResponseEntity.internalServerError().build();
 
-        responseMessage
-                .code(HttpStatus.CREATED.value())
-                .message(TipoReporteMessageConstants.TIPO_REPORTE_SUCCESS_SAVE)
-                .build();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("tiporeportes/{id}");
+        URI location = builder.buildAndExpand(tipoReporteSave).toUri();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseMessage);
+        return ResponseEntity.created(location).body(tipoReporteMapper.toDTO(tipoReporteSave));
     }
 }
