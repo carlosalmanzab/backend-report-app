@@ -1,7 +1,11 @@
 package com.reportapp.demo.controller;
 
+import com.reportapp.demo.entity.dto.barrio.BarrioDTO;
 import com.reportapp.demo.service.BarrioService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +21,7 @@ public class BarrioController {
     private BarrioService barrioService;
 
     @GetMapping()
-    public ResponseEntity<?> listar() {
+    public ResponseEntity<List<BarrioDTO>> listar() {
         return barrioService.listar();
     }
 }
