@@ -1,4 +1,4 @@
-package com.reportapp.demo.config;
+package com.reportapp.demo.config.mapper;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

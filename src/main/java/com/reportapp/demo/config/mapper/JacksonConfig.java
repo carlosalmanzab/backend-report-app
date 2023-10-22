@@ -1,4 +1,4 @@
-package com.reportapp.demo.config;
+package com.reportapp.demo.config.mapper;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;

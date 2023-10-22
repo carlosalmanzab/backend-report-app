@@ -1,4 +1,4 @@
-package com.reportapp.demo.config;
+package com.reportapp.demo.config.swagger;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
