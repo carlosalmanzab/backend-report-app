@@ -1,7 +1,11 @@
 package com.reportapp.demo.controller;
 
+import com.reportapp.demo.entity.dto.comuna.ComunaDTO;
 import com.reportapp.demo.service.ComunaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +20,7 @@ public class ComunaController {
     private ComunaService comunaService;
 
     @GetMapping()
-    public ResponseEntity<?> listar() {
+    public ResponseEntity<List<ComunaDTO>> listar() {
         return comunaService.listar();
     }
 }

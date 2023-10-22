@@ -1,24 +1,17 @@
 package com.reportapp.demo.service.serviceImpl;
 
-import com.reportapp.demo.entity.Barrio;
 import com.reportapp.demo.entity.Comuna;
-import com.reportapp.demo.entity.dto.barrio.BarrioDTO;
 import com.reportapp.demo.entity.dto.comuna.ComunaDTO;
 import com.reportapp.demo.entity.mapper.BarrioMapper;
 import com.reportapp.demo.entity.mapper.ComunaMapper;
 import com.reportapp.demo.repository.IBarrioRepository;
 import com.reportapp.demo.repository.IComunaRepository;
 import com.reportapp.demo.service.ComunaService;
-import com.reportapp.demo.share.constant.BarrioMessageConstants;
-import com.reportapp.demo.share.constant.ComunaMessageConstants;
-import com.reportapp.demo.share.dto.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ComunaServiceImpl implements ComunaService {
@@ -34,17 +27,10 @@ public class ComunaServiceImpl implements ComunaService {
     private BarrioMapper barrioMapper;
 
     @Override
-    public ResponseEntity<?> listar() {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
-
+    public ResponseEntity<List<ComunaDTO>> listar() {
         List<Comuna> comunas = comunaRepository.findAll();
 
-        if (comunas.isEmpty()) {
-            responseMessage.code(HttpStatus.NOT_FOUND.value())
-                    .message(ComunaMessageConstants.COMUNA_NO_FOUND)
-                    .build();
-            return new ResponseEntity<>(responseMessage, HttpStatus.NO_CONTENT);
-        }
+        if (comunas.isEmpty()) return ResponseEntity.noContent().build();
 
         List<ComunaDTO> comunaDTOList = comunas.stream().map(comuna -> {
             ComunaDTO comunaDTO = new ComunaDTO();
@@ -57,6 +43,7 @@ public class ComunaServiceImpl implements ComunaService {
             );
             return comunaDTO;
         }).toList();
-        return new ResponseEntity<>(comunaDTOList, HttpStatus.OK);
+
+        return ResponseEntity.ok(comunaDTOList);
     }
 }
