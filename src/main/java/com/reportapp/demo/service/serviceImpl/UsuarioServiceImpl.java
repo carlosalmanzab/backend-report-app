@@ -5,8 +5,6 @@ import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOLogin;
 import com.reportapp.demo.entity.mapper.ReporteMapper;
 import com.reportapp.demo.entity.mapper.UsuarioMapper;
-import com.reportapp.demo.share.constant.UsuarioMessageConstants;
-import com.reportapp.demo.share.dto.ResponseMessage;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTO;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOSave;
 import com.reportapp.demo.entity.Usuario;
@@ -14,10 +12,11 @@ import com.reportapp.demo.repository.IUsuarioRepository;
 import com.reportapp.demo.service.UsuarioService;
 import com.reportapp.demo.util.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,117 +36,71 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<?> buscarPorId(Long id) {
-        ResponseMessage.ResponseMessageBuilder responseMessage =  ResponseMessage.builder();
+    public ResponseEntity<UsuarioDTO> buscarPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         if (usuario.isEmpty()) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND)
-                    .build();
-            return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
 
         UsuarioDTO usuarioDTO = usuarioMapper.toDTO(usuario.get());
         List<ReporteDTO> reporteDTOList = usuarioDTO.getReportes().stream().toList();
 
         usuarioDTO.setReportes(reporteDTOList);
-        return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
+        return ResponseEntity.ok(usuarioDTO);
     }
 
 
     @Override
-    public ResponseEntity<?> registrar(UsuarioDTOSave usuarioDTOSave) {
-        ResponseMessage.ResponseMessageBuilder responseMessage =  ResponseMessage.builder();
+    public ResponseEntity<UsuarioDTO> registrar(UsuarioDTOSave usuarioDTOSave) {
 
         if (usuarioDTOSave == null) {
-            responseMessage
-                    .code(HttpStatus.BAD_REQUEST.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NULL)
-                    .build();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
+            return ResponseEntity.badRequest().build();
         }
 
         Usuario usuario = usuarioMapper.toEntity(usuarioDTOSave);
         usuario.setPassword(PasswordEncoder.encode(usuarioDTOSave.getPassword()));
         Usuario usuarioSave = usuarioRepository.save(usuario);
 
-        if (usuarioSave == null) {
-            responseMessage
-                    .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_SAVE)
-                    .build();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseMessage);
-        }
+        if (usuarioSave == null) return ResponseEntity.internalServerError().build();
 
-        responseMessage
-                .code(HttpStatus.CREATED.value())
-                .message(UsuarioMessageConstants.USUARIO_SUCCESS_SAVE)
-                .build();
+        UriComponentsBuilder builder = UriComponentsBuilder.fromPath("usuarios/{id}");
+        URI location = builder.buildAndExpand(usuarioSave.getId()).toUri();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseMessage);
+        return ResponseEntity.created(location).body(usuarioMapper.toDTO(usuarioSave));
     }
 
     @Override
-    public ResponseEntity<?> login(UsuarioDTOLogin usuarioDTOLogin) {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
+    public ResponseEntity<UsuarioDTO> login(UsuarioDTOLogin usuarioDTOLogin) {
+        if (usuarioDTOLogin == null) return ResponseEntity.badRequest().build();
 
-        if (usuarioDTOLogin == null) {
-            responseMessage
-                    .code(HttpStatus.BAD_REQUEST.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NULL)
-                    .build();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMessage);
-        }
+        Optional<Usuario> usuario = usuarioRepository
+        .findByEmailAndPassword(usuarioDTOLogin.getEmail(), usuarioDTOLogin.getEmail());
 
-        Optional<Usuario> usuario = usuarioRepository.findByEmailAndPassword(usuarioDTOLogin.getEmail(), usuarioDTOLogin.getEmail());
-
-        if (usuario.isEmpty()) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMessage);
-        }
+        if (usuario.isEmpty()) return ResponseEntity.notFound().build();
 
         UsuarioDTO usuarioDTO = usuarioMapper.toDTO(usuario.get());
-        return ResponseEntity.status(HttpStatus.OK).body(usuarioDTO);
+        return ResponseEntity.ok(usuarioDTO);
     }
 
     @Override
-    public ResponseEntity<?> reportesPorId(Long id) {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
+    public ResponseEntity<List<ReporteDTO>> reportesPorId(Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        List<Reporte> reportes = (List<Reporte>) usuario.get().getReportes();
-        if (usuario.isEmpty() || reportes.isEmpty()) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND_REPORTES)
-                    .build();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseMessage);
-        }
-        List<ReporteDTO> reporteDTO = reportes.stream().map(reporteMapper::toDTO).toList();
-        return ResponseEntity.status(HttpStatus.OK).body(reporteDTO);
+
+        Optional<List<Reporte>> reportes = usuario.map(Usuario::getReportes);
+        
+        if (usuario.isEmpty() || reportes.isEmpty()) return ResponseEntity.notFound().build();
+        
+        List<ReporteDTO> reporteDTO = reportes.get().stream().map(reporteMapper::toDTO).toList();
+        return ResponseEntity.ok(reporteDTO);
     }
 
     @Override
-    public ResponseEntity<?> verificarExistencia(UsuarioDTOSave usuarioDTOSave) {
-        ResponseMessage.ResponseMessageBuilder responseMessage = ResponseMessage.builder();
-        Boolean exist = usuarioRepository.existsByEmail(usuarioDTOSave.getEmail());
+    public ResponseEntity<Boolean> verificarExistencia(UsuarioDTOSave usuarioDTOSave) {
+        Boolean hasUsuario = usuarioRepository.existsByEmail(usuarioDTOSave.getEmail());
 
-        if (!exist) {
-            responseMessage
-                    .code(HttpStatus.NOT_FOUND.value())
-                    .message(UsuarioMessageConstants.USUARIO_ERROR_NO_FOUND)
-                    .build();
-            return new ResponseEntity<>(responseMessage, HttpStatus.NOT_FOUND);
-        }
+        if (Boolean.FALSE.equals(hasUsuario)) return ResponseEntity.notFound().build();
 
-        responseMessage
-                .code(HttpStatus.OK.value())
-                .message(UsuarioMessageConstants.USUARIO_FOUND)
-                .build();
-        return ResponseEntity.ok(responseMessage);
+        return ResponseEntity.ok().build();
     }
 /*
 

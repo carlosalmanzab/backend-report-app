@@ -7,8 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import org.hibernate.mapping.List;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -63,6 +66,6 @@ public class Usuario {
     private Barrio barrio;
 
     @OneToMany(mappedBy = "usuario")
-    private Set<Reporte> reportes;
+    private ArrayList<Reporte> reportes;
 
 }
