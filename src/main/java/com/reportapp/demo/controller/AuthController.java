@@ -1,5 +1,6 @@
 package com.reportapp.demo.controller;
 
+import com.reportapp.demo.entity.dto.usuario.UsuarioDTO;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOLogin;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOSave;
 import com.reportapp.demo.service.UsuarioService;
@@ -21,12 +22,12 @@ public class AuthController {
     private UsuarioService usuarioService;
 
     @PostMapping("/loguin")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTOLogin usuarioDTOLogin) {
+    public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioDTOLogin usuarioDTOLogin) {
         return usuarioService.login(usuarioDTOLogin);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> guardar(@Valid @RequestBody UsuarioDTOSave usuarioDTOSave) {
+    public ResponseEntity<UsuarioDTO> guardar(@Valid @RequestBody UsuarioDTOSave usuarioDTOSave) {
         return usuarioService.registrar(usuarioDTOSave);
     }
 
