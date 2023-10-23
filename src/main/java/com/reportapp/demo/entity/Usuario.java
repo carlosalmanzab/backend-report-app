@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.mapping.List;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -64,6 +65,10 @@ public class Usuario {
     @ManyToOne
     @JoinColumn(name = "barrio_id")
     private Barrio barrio;
+
+    @Builder.Default
+    @Column(name = "fechaCreacion")
+    private LocalDateTime fechaCreacio = LocalDateTime.now();
 
     @OneToMany(mappedBy = "usuario")
     private ArrayList<Reporte> reportes;

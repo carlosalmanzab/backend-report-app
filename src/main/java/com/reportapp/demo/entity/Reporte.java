@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -41,8 +42,9 @@ public class Reporte {
     @JoinColumn(name = "coordenada_id")
     private Coordenadas coordenadas;
 
+    @Builder.Default
     @Column(name = "fecha")
-    private LocalDate fechaRegistro;
+    private LocalDateTime fechaRegistro = LocalDateTime.now();
 
     @Column(name = "descripcion")
     private String descripcion;
