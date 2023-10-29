@@ -1,7 +1,6 @@
 package com.reportapp.demo.entity.dto.barrio;
 
 import com.reportapp.demo.entity.Comuna;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

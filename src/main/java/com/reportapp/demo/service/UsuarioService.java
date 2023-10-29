@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 public interface UsuarioService {
 
     ResponseEntity<UsuarioDTO> buscarPorId(Long id);
-    ResponseEntity<UsuarioDTO> registrar(UsuarioDTOSave usuarioDTOSave);
-    ResponseEntity<UsuarioDTO> login(UsuarioDTOLogin usuarioDTOLogin);
     ResponseEntity<List<ReporteDTO>> reportesPorId(Long id);
     ResponseEntity<Boolean> verificarExistencia(UsuarioDTOSave usuarioDTOSave);
 /*

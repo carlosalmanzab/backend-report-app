@@ -1,11 +1,12 @@
 package com.reportapp.demo.entity.dto.usuario;
 
-import com.reportapp.demo.entity.Barrio;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UsuarioDTOSave {
 
     private Long id;
@@ -18,5 +19,5 @@ public class UsuarioDTOSave {
     private String password;
     private String celular;
     private String direccion;
-    private Barrio barrio;
+    private Long barrioId;
 }
