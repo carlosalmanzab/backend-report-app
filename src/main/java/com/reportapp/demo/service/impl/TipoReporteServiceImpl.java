@@ -1,4 +1,4 @@
-package com.reportapp.demo.service.serviceImpl;
+package com.reportapp.demo.service.impl;
 
 import com.reportapp.demo.entity.TipoReporte;
 import com.reportapp.demo.entity.dto.tipoReporte.TipoReporteDTO;

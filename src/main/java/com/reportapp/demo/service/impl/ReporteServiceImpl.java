@@ -1,10 +1,10 @@
-package com.reportapp.demo.service.serviceImpl;
+package com.reportapp.demo.service.impl;
 
 import com.reportapp.demo.entity.Reporte;
-import com.reportapp.demo.entity.Usuario;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
 import com.reportapp.demo.entity.mapper.ReporteMapper;
+import com.reportapp.demo.entity.usuario.Usuario;
 import com.reportapp.demo.repository.IReporteRepository;
 import com.reportapp.demo.repository.IUsuarioRepository;
 import com.reportapp.demo.service.ReporteService;
