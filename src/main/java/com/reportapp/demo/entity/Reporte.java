@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.reportapp.demo.entity.usuario.Usuario;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
