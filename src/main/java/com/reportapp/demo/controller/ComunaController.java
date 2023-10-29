@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/comunas")
+@RequestMapping("/api/comunas")
 @Tag(name = "Comuna", description = "Endpoint para el manejo de los Comunas")
 public class ComunaController {
     @Autowired

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tiporeportes")
+@RequestMapping("/api/tiporeportes")
 @Tag(name = "Tipo Reporte", description = "Endpoint para el manejo de los Tipos de Reportes")
 public class TipoReporteController {
     @Autowired
