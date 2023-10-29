@@ -19,7 +19,7 @@ public class Barrio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nombre", unique = true)
+    @Column(name = "nombre", unique = true, columnDefinition = "varchar(100) character set utf8mb4")
     private String nombre;
 
     @ManyToOne

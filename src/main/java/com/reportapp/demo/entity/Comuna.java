@@ -18,7 +18,7 @@ public class Comuna {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "nombre")
+    @Column(name = "nombre", columnDefinition = "varchar(100) character set utf8mb4")
     private String nombre;
 
 }
