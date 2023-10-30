@@ -11,5 +11,6 @@ public interface ReporteService {
 
     ResponseEntity<List<ReporteDTO>> listarReportes();
     ResponseEntity<ReporteDTO> reportePorId(Long id);
-    ResponseEntity<ReporteDTO> guardarReporte(ReporteDTOSave reporteDTOSave, Long idUsuario);
+    ResponseEntity<ReporteDTO> guardarReporte(ReporteDTOSave reporteDTOSave, String username);
+    ResponseEntity<List<ReporteDTO>> reportesPorUsuario(String username);
 }

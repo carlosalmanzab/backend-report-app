@@ -8,5 +8,20 @@
     "name": "scripts.locations[0]",
     "type": "java.lang.String",
     "description": "A description for 'scripts.locations[0]'"
+  },
+  {
+    "name": "reader.file.comuna",
+    "type": "java.lang.String",
+    "description": "A description for 'reader.file.comuna'"
+  },
+  {
+    "name": "reader.file.barrio",
+    "type": "java.lang.String",
+    "description": "A description for 'reader.file.barrio'"
+  },
+  {
+    "name": "reader.file.tiporeporte",
+    "type": "java.lang.String",
+    "description": "A description for 'reader.file.tiporeporte'"
   }
 ]}
