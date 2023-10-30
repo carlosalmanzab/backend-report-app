@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class TipoReporteDTO {
     private Long id;
-    private String nombre;
     private String descripcion;
     private boolean estado;
 }

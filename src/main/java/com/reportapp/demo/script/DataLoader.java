@@ -17,8 +17,10 @@ import org.springframework.stereotype.Component;
 import com.reportapp.demo.common.csv.CSVConverter;
 import com.reportapp.demo.entity.Barrio;
 import com.reportapp.demo.entity.Comuna;
+import com.reportapp.demo.entity.TipoReporte;
 import com.reportapp.demo.repository.IBarrioRepository;
 import com.reportapp.demo.repository.IComunaRepository;
+import com.reportapp.demo.repository.ITipoReporteRepository;
 
 import jakarta.annotation.PostConstruct;
 
@@ -30,24 +32,30 @@ public class DataLoader {
     @Value("${reader.file.barrio}")
     private String barrioFile;
 
+    @Value("${reader.file.tiporeporte}")
+    private String tiporeporteFile;
+
     @Autowired
     private IComunaRepository comunaRepository;
 
     @Autowired
     private IBarrioRepository barrioRepository;
 
+    @Autowired
+    private ITipoReporteRepository reporteRepository;
+
     @PostConstruct
     public void init() throws IOException {
-        if (comunaRepository.count() == 0) {
+        if (comunaRepository.count() == 0)
             loadDataComuna();
-        }
-        if (barrioRepository.count() == 0) {
+        if (barrioRepository.count() == 0)
             loadDataBarrio();
-        }
+        if (reporteRepository.count() == 0)
+            loadDataTiporeporte();
     }
 
     private void loadDataComuna() throws IOException {
-       InputStream inputStream = new FileInputStream(comunaFile);
+        InputStream inputStream = new FileInputStream(comunaFile);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
         List<Comuna> comunas = CSVConverter.convertToListComuna(inputStreamReader);
@@ -56,13 +64,23 @@ public class DataLoader {
         }
     }
 
-        private void loadDataBarrio() throws IOException {
+    private void loadDataBarrio() throws IOException {
         InputStream inputStream = new FileInputStream(barrioFile);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
         List<Barrio> barrios = CSVConverter.convertToListBarrio(inputStreamReader, comunaRepository);
         for (Barrio barrio : barrios) {
             barrioRepository.save(barrio);
+        }
+    }
+
+    private void loadDataTiporeporte() throws IOException {
+        InputStream inputStream = new FileInputStream(tiporeporteFile);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+
+        List<TipoReporte> tipos = CSVConverter.convertToListTipoReporte(inputStreamReader);
+        for (TipoReporte tipo : tipos) {
+            reporteRepository.save(tipo);
         }
     }
 }

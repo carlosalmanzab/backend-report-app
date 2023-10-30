@@ -21,9 +21,6 @@ public class TipoReporte {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nombre")
-    private String nombre;
-
     @Column(name = "descripcion")
     private String descripcion;
 
