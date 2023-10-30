@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        final String token = getTokenFromRequest(request);
+        final String token = jwtService.getTokenFromRequest(request);
         final String email;
 
         if (token==null) {
@@ -57,19 +57,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         filterChain.doFilter(request, response);
     }
 
-        /**
-     * Obtiene el token de autenticación a partir de la solicitud HttpServletRequest proporcionada.
-     *
-     * @param  request  el objeto HttpServletRequest que contiene la información de la solicitud
-     * @return          el token de autenticación extraído del encabezado de la solicitud, o null si no se encuentra
-     */
-    private String getTokenFromRequest(HttpServletRequest request) {
-        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-
-        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);
-
-        }
-        return null;
-    }
 }

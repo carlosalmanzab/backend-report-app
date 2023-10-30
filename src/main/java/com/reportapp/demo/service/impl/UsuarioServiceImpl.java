@@ -34,8 +34,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public ResponseEntity<UsuarioDTO> buscarPorId(Long id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id);
+    public ResponseEntity<UsuarioDTO> buscar(String username) {
+        
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(username);
         if (usuario.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
@@ -47,14 +48,6 @@ public class UsuarioServiceImpl implements UsuarioService {
         return ResponseEntity.ok(usuarioDTO);
     }
 
-    @Override
-    public ResponseEntity<Boolean> verificarExistencia(UsuarioDTOSave usuarioDTOSave) {
-        Boolean hasUsuario = usuarioRepository.existsByEmail(usuarioDTOSave.getEmail());
-
-        if (Boolean.FALSE.equals(hasUsuario)) return ResponseEntity.notFound().build();
-
-        return ResponseEntity.ok().build();
-    }
 /*
 
     @Override
@@ -75,9 +68,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 */
 
-    @Override
-    public ResponseEntity<List<ReporteDTO>> reportesPorId(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'reportesPorId'");
-    }
+    // @Override
+    // public ResponseEntity<List<ReporteDTO>> reportesPorId(Long id) {
+    //     // TODO Auto-generated method stub
+    //     throw new UnsupportedOperationException("Unimplemented method 'reportesPorId'");
+    // }
 }

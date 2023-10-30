@@ -6,14 +6,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class JwtService {
@@ -25,12 +28,14 @@ public class JwtService {
     }
 
     private String getToken(Map<String, Object> claims, UserDetails usuario) {
+        Date now = new Date();
+        Date expiration = new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000);
         return Jwts
         .builder()
         .setClaims(claims)
         .setSubject(usuario.getUsername())
-        .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24 * 30))
+        .setIssuedAt(now)
+        .setExpiration(expiration)
         .signWith(getKey(), SignatureAlgorithm.HS256)
         .compact();
     }
@@ -75,4 +80,19 @@ public class JwtService {
         return getExpiration(token).before(new Date());
     }
 
+            /**
+     * Obtiene el token de autenticación a partir de la solicitud HttpServletRequest proporcionada.
+     *
+     * @param  request  el objeto HttpServletRequest que contiene la información de la solicitud
+     * @return          el token de autenticación extraído del encabezado de la solicitud, o null si no se encuentra
+     */
+    public String getTokenFromRequest(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
+
+        }
+        return null;
+    }
 }
