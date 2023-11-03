@@ -28,7 +28,7 @@ public class UsuarioController {
     @Autowired
     private JwtService jwtService;
 
-    @GetMapping()
+    @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO> buscarPorId(HttpServletRequest request) {
         String token = jwtService.getTokenFromRequest(request);
 
