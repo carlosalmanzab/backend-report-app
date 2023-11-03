@@ -1,5 +1,9 @@
 package com.reportapp.demo.entity.dto.reporte;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.reportapp.demo.entity.Barrio;
 import com.reportapp.demo.entity.Coordenadas;
 import com.reportapp.demo.entity.Imagen;
@@ -27,6 +31,9 @@ public class ReporteDTO {
 
     private Coordenadas coordenadas;
 
+    @JsonProperty("fechaRegistro")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     private LocalDate fechaRegistro;
 
     private String descripcion;
