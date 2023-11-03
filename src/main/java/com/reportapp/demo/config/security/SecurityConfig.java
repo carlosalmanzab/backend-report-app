@@ -3,6 +3,7 @@ package com.reportapp.demo.config.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +27,8 @@ public class SecurityConfig {
         "/swagger-resources",
         "/swagger-resources/**",
         "/api/auth/**",
+        "/api/comunas",
+        "/api/barrios",
         "/auth/**",
         "/docs/**",
         "/docs"
@@ -47,11 +50,11 @@ public class SecurityConfig {
         AuthenticationProvider authProvider
         ) throws Exception {
 
-        return http.csrf(AbstractHttpConfigurer::disable)
+        return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authRequests ->
                     authRequests
-                    .requestMatchers(WHITE_LIST)
-                    .permitAll()
+                    .requestMatchers(WHITE_LIST).permitAll()
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                     .anyRequest().authenticated()
         )
         .sessionManagement(sessionManager ->
