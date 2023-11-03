@@ -3,7 +3,6 @@ package com.reportapp.demo.entity.mapper;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTO;
 import com.reportapp.demo.entity.Reporte;
-import com.reportapp.demo.entity.dto.usuario.UsuarioDTOLogin;
 import com.reportapp.demo.entity.dto.usuario.UsuarioDTOSave;
 import com.reportapp.demo.entity.usuario.Usuario;
 
@@ -21,8 +20,6 @@ public interface UsuarioMapper {
     UsuarioMapper INSTANCE = Mappers.getMapper(UsuarioMapper.class);
 
     UsuarioDTO toDTO(Usuario usuario);
-
-    Usuario toEntity(UsuarioDTOLogin usuarioDTOLogin);
 
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "barrio", ignore = true)
