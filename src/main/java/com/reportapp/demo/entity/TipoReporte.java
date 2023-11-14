@@ -8,6 +8,11 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -26,7 +31,10 @@ public class TipoReporte {
 
     @Column(name = "usuario")
     private String nombreUsuario;
-
+    
+    @JsonProperty("fecha")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonSerialize(using = LocalDateSerializer.class)
     @Column(name = "fecha")
     private LocalDate fecha;
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,7 +24,10 @@ public class ReporteController {
 
     @Autowired
     private JwtService jwtService;
-    
+
+    @Autowired
+    private SimpMessagingTemplate simpMessagingTemplate;
+
     @GetMapping()
     public ResponseEntity<List<ReporteDTO>> listar() {
         return reporteService.listarReportes();
@@ -38,7 +42,11 @@ public class ReporteController {
     public ResponseEntity<ReporteDTO> guardar(@RequestBody ReporteDTOSave reporteDTOSave, HttpServletRequest request) {
         String token = jwtService.getTokenFromRequest(request);
         String username = jwtService.getUsernameFromToken(token);
-        return reporteService.guardarReporte(reporteDTOSave, username);
+        ResponseEntity<ReporteDTO> response = reporteService.guardarReporte(reporteDTOSave, username);
+        if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+            simpMessagingTemplate.convertAndSend("/topic/reportes", response.getBody());
+        }
+        return response;
     }
 
     @GetMapping("/usuario")

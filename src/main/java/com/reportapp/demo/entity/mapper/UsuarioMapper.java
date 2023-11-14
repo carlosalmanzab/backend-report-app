@@ -67,7 +67,7 @@ public interface UsuarioMapper {
             return null;
         }
         UsuarioDTO usuarioDTO = toDTO(usuario);
-        usuarioDTO.setReportes(toReporteDTOList((List<Reporte>) usuario.getReportes())); // Llama al método que mapea la lista de Reportes
+        usuarioDTO.setReportes(toReporteDTOList(usuario.getReportes())); // Llama al método que mapea la lista de Reportes
         return usuarioDTO;
     }
 
