@@ -31,7 +31,8 @@ public class SecurityConfig {
         "/api/barrios",
         "/auth/**",
         "/docs/**",
-        "/docs"
+        "/docs",
+        "/ws/**"
     };
 
     @Bean

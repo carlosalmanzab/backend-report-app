@@ -15,14 +15,21 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")// para todos los endpoints
-                .allowedOrigins("http://localhost:8100")// permitir solicitudes de todos los origenes
+                .allowedOriginPatterns("*")// permitir solicitudes de todos los origenes
                 .allowedMethods(
-                    HttpMethod.GET.name(),
-                    HttpMethod.POST.name(),
-                    HttpMethod.PUT.name(),
-                    HttpMethod.DELETE.name()
-                )// permitir todos los metodos
+                        HttpMethod.GET.name(),
+                        HttpMethod.POST.name(),
+                        HttpMethod.PUT.name(),
+                        HttpMethod.DELETE.name())// permitir todos los metodos
                 .allowedHeaders(HttpHeaders.CONTENT_TYPE, HttpHeaders.AUTHORIZATION)
+                .allowedHeaders("*")
                 .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization");
+
+        registry.addMapping("/ws/**") // For WebSocket endpoint
+                .allowedOriginPatterns("*")
+                .allowedHeaders("*") // Allow all headers for WebSocket
+                .exposedHeaders("*") // Expose all headers for WebSocket
+                .allowCredentials(true);
     }
+
 }
