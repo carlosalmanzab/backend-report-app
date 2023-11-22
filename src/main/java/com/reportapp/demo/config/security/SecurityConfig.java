@@ -32,7 +32,9 @@ public class SecurityConfig {
         "/auth/**",
         "/docs/**",
         "/docs",
-        "/ws/**"
+        "/ws/**",
+        "/api/notificacion",
+        "/api/notificacion/**"
     };
 
     @Bean

@@ -23,5 +23,15 @@
     "name": "reader.file.tiporeporte",
     "type": "java.lang.String",
     "description": "A description for 'reader.file.tiporeporte'"
+  },
+  {
+    "name": "firebase-configuration-file",
+    "type": "java.lang.String",
+    "description": "A description for 'firebase-configuration-file'"
+  },
+  {
+    "name": "app.notifications.defaults",
+    "type": "java.lang.String",
+    "description": "A description for 'app.notifications.defaults'"
   }
 ]}
