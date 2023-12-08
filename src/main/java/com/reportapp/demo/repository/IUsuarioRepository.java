@@ -1,6 +1,5 @@
 package com.reportapp.demo.repository;
 
-import com.reportapp.demo.entity.Reporte;
 import com.reportapp.demo.entity.usuario.Usuario;
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -17,7 +17,6 @@ import com.reportapp.demo.entity.Barrio;
 import com.reportapp.demo.entity.Reporte;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

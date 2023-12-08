@@ -1,7 +1,6 @@
 package com.reportapp.demo.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
