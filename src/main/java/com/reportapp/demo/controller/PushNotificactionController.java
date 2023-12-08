@@ -24,28 +24,28 @@ public class PushNotificactionController {
     private PushNotificationService pushNotificationService;
 
     @PostMapping("/topic")
-    public ResponseEntity sendNotification(@RequestBody PushNotificationRequest request) {
+    public ResponseEntity<PushNotificationResponse> sendNotification(@RequestBody PushNotificationRequest request) {
         pushNotificationService.sendPushNotificationWithoutData(request);
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."),
                 HttpStatus.OK);
     }
 
     @PostMapping("/token")
-    public ResponseEntity sendTokenNotification(@RequestBody PushNotificationRequest request) {
+    public ResponseEntity<PushNotificationResponse> sendTokenNotification(@RequestBody PushNotificationRequest request) {
         pushNotificationService.sendPushNotificationToToken(request);
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."),
                 HttpStatus.OK);
     }
 
     @PostMapping("/data")
-    public ResponseEntity sendDataNotification(@RequestBody PushNotificationRequest request) {
+    public ResponseEntity<PushNotificationResponse> sendDataNotification(@RequestBody PushNotificationRequest request) {
         pushNotificationService.sendPushNotification(request);
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."),
                 HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity sendSampleNotification() {
+    public ResponseEntity<PushNotificationResponse> sendSampleNotification() {
         pushNotificationService.sendSamplePushNotification();
         return new ResponseEntity<>(new PushNotificationResponse(HttpStatus.OK.value(), "Notification has been sent."),
                 HttpStatus.OK);

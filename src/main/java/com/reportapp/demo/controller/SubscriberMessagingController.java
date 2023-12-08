@@ -25,7 +25,7 @@ public class SubscriberMessagingController {
     private JwtService jwtService;
     
     @PostMapping()
-    public ResponseEntity subscribir(@RequestBody String token, HttpServletRequest request) {
+    public ResponseEntity<Object> subscribir(@RequestBody String token, HttpServletRequest request) {
         String jwtToken = jwtService.getTokenFromRequest(request);
         String username = jwtService.getUsernameFromToken(jwtToken);
         return subscriberMessagingService.save(token, username);
