@@ -4,6 +4,9 @@ import com.reportapp.demo.entity.dto.reporte.ReporteDTO;
 import com.reportapp.demo.entity.dto.reporte.ReporteDTOSave;
 import com.reportapp.demo.service.JwtService;
 import com.reportapp.demo.service.ReporteService;
+import com.reportapp.demo.service.SubscriberMessagingService;
+import com.reportapp.demo.share.constant.CustomMessage;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -28,6 +31,9 @@ public class ReporteController {
     @Autowired
     private SimpMessagingTemplate simpMessagingTemplate;
 
+    @Autowired
+    private SubscriberMessagingService subscriberMessagingService;
+
     @GetMapping()
     public ResponseEntity<List<ReporteDTO>> listar() {
         return reporteService.listarReportes();
@@ -45,6 +51,14 @@ public class ReporteController {
         ResponseEntity<ReporteDTO> response = reporteService.guardarReporte(reporteDTOSave, username);
         if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
             simpMessagingTemplate.convertAndSend("/topic/reportes", response.getBody());
+
+            ReporteDTO responseBody = response.getBody();
+            if (responseBody != null && responseBody.getTipoReporte() != null && responseBody.getTipoReporte().getDescripcion() != null
+                    && responseBody.getDescripcion() != null) {
+                subscriberMessagingService.communicate(responseBody.getTipoReporte().getDescripcion(),
+                        responseBody.getDescripcion(), CustomMessage.NEW_REPORT_TOPIC);
+            }
+            
         }
         return response;
     }
