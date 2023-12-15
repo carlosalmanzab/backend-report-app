@@ -34,3 +34,6 @@ build/
 
 ### RESOURCES ###
 src/main/resources/firebase/
+
+### DATA ###
+src/data/
