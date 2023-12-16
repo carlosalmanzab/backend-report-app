@@ -36,4 +36,4 @@ build/
 src/main/resources/firebase/
 
 ### DATA ###
-src/data/
+data/
