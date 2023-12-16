@@ -1,0 +1,30 @@
+version: '1.0'
+
+services:
+  report-app-service:
+    container_name: report-app-service_container
+    image: report-app-service
+    build: .
+    ports:
+      - 8000-8999:8080 # Expose port 8080
+    restart: always  
+    environment:
+      DATABASE_HOST: report-app-db
+      DATABASE_NAME: reportdb
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: mysql_root
+    depends_on:
+      - report-app-db
+
+  report-app-db:
+    container_name: report-app-db_container
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: reportdb
+      MYSQL_USER: mysql_user
+      MYSQL_ROOT_PASSWORD: mysql_root
+    ports:
+      - 3307:3306
+    volumes:
+      - ./data:/var/lib/mysql
