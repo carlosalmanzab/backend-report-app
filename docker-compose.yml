@@ -9,22 +9,27 @@ services:
       - 8000-8999:8080 # Expose port 8080
     restart: always  
     environment:
-      DATABASE_HOST: report-app-db
-      DATABASE_NAME: reportdb
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: mysql_root
+      DATABASE_URL: jdbc:postgresql://report-app-db_container:5432/report_database
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: secret_password
     depends_on:
       - report-app-db
+    volumes:
+      - C:\Users\alman\Repository\backend-report-app\src\main\resources\csv:/app/csv
+      - C:\Users\alman\Repository\backend-report-app\src\main\resources\firebase:/app/firebase
 
   report-app-db:
     container_name: report-app-db_container
-    image: mysql
+    image: postgres:16.1
     restart: always
     environment:
-      MYSQL_DATABASE: reportdb
-      MYSQL_USER: mysql_user
-      MYSQL_ROOT_PASSWORD: mysql_root
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret_password
+      POSTGRES_DB: report_database
     ports:
-      - 3307:3306
+      - 5000:5432
     volumes:
-      - ./data:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:    
