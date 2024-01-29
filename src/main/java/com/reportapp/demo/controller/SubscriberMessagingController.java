@@ -2,7 +2,6 @@ package com.reportapp.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,6 @@ import com.reportapp.demo.service.SubscriberMessagingService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 
-@CrossOrigin
 @RestController
 @RequestMapping("api/sub/messaging")
 @Tag(name = "subscriber", description = "Endpoint para el manejo de las subscripciones a mensajes")

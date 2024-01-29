@@ -1,6 +1,5 @@
 package com.reportapp.demo.config.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.reportapp.demo.jwt.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -53,7 +54,7 @@ public class SecurityConfig {
         AuthenticationProvider authProvider
         ) throws Exception {
 
-        return http.cors(AbstractHttpConfigurer::disable)
+        return http
         .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authRequests ->
                     authRequests

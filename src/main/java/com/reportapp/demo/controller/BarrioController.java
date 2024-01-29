@@ -1,20 +1,18 @@
 package com.reportapp.demo.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.reportapp.demo.entity.dto.barrio.BarrioDTO;
 import com.reportapp.demo.service.BarrioService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@CrossOrigin
 @RestController
 @RequestMapping("/api/barrios")
 @Tag(name = "Barrio", description = "Endpoint para el manejo de los Barrios")
