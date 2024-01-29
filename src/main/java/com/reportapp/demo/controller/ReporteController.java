@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/reportes")
 @Tag(name = "Reporte", description = "Endpoint para el manejo de reportes")

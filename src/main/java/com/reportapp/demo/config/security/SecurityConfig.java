@@ -53,7 +53,8 @@ public class SecurityConfig {
         AuthenticationProvider authProvider
         ) throws Exception {
 
-        return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable)
+        return http.cors(AbstractHttpConfigurer::disable)
+        .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(authRequests ->
                     authRequests
                     .requestMatchers(WHITE_LIST).permitAll()
